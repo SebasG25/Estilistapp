@@ -20,9 +20,10 @@ export const SignIn = () => {
     try {
       const { data } = await axios.get(`http://localhost:3001/users?email=${userData.email}&password=${userData.password}`)
       if (data.length === 1) {
-        localStorage.setItem("user", JSON.stringify(data[0]))
-        setUser(userData)
-        return navigate('/')
+        const userLogged = data[0]
+        localStorage.setItem('user', JSON.stringify(userLogged))
+        setUser(userLogged)
+        return navigate(`/profile/${userLogged.id}`)
       }
       console.log('email o contraseña incorrecta')
     } catch (error) {

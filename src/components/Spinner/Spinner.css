@@ -1,0 +1,15 @@
+.spinner__container {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+
+.spinner__icon {
+    animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -14,7 +14,6 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 
-
 export const SignUp = () => {
   const [role, setRole] = useState('')
 
