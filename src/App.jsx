@@ -25,7 +25,7 @@ export const App = () => {
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
+      <ToastContainer limit={2} />
     </AuthProvider>
   )
 }
