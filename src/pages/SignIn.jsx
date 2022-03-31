@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useAuth } from '../auth/useAuth'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
@@ -7,10 +10,31 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 
-
 export const SignIn = () => {
-  const handleSubmit = (event) => {
+  const [userData, setUserData] = useState({
+    email: '', password: ''
+  })
+  const { setUser } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSubmit = async event => {
     event.preventDefault()
+    try {
+      const { data } = await axios.get(`http://localhost:3001/users?email=${userData.email}&password=${userData.password}`)
+      if (data.length === 1) {
+        const userLogged = data[0]
+        localStorage.setItem('user', JSON.stringify(userLogged))
+        setUser(userLogged)
+        return navigate(`/profile/${userLogged.id}`)
+      }
+      console.log('email o contraseña incorrecta')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleInputChange = e => {
+    setUserData({ ...userData, [e.target.name]: e.target.value })
   }
 
   return (
@@ -36,6 +60,8 @@ export const SignIn = () => {
                 label="Correo"
                 name="email"
                 autoComplete="email"
+                onChange={handleInputChange}
+                value={userData.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -46,6 +72,8 @@ export const SignIn = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={handleInputChange}
+                value={userData.password}
               />
             </Grid>
           </Grid>

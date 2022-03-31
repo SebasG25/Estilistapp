@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Nav, Wrapper, LogoContainer, NavLink, Bars, Close, NavMenu, NavBtn, NavBtnLink } from './NavbarElements.js'
 import { FaReact } from 'react-icons/fa'
+import { useAuth } from '../../auth/useAuth'
 
 export const Navbar = () => {
   const [show, setShow] = useState(true)
   const [navIsOpen, setNavIsOpen] = useState(false)
+  const [userData, setUserData] = useState()
+  const { user } = useAuth()
 
   const controlNavbar = () => window.scrollY > 200 ? setShow(false) : setShow(true)
 
@@ -14,6 +17,10 @@ export const Navbar = () => {
       window.removeEventListener('scroll', controlNavbar)
     }
   }, [])
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem('user')))
+  }, [user])
 
   return (
     <>
@@ -38,7 +45,11 @@ export const Navbar = () => {
             </NavLink>
           </NavMenu>
           <NavBtn navIsOpen={navIsOpen} onClick={() => setNavIsOpen(!navIsOpen)}>
-            <NavBtnLink to='/sign-in'>Ingresa</NavBtnLink>
+            {
+              !userData
+                ? <NavBtnLink to='/sign-in'>Ingresa</NavBtnLink>
+                : <NavLink to={`profile/${userData.id}`} onClick={() => setNavIsOpen(!navIsOpen)}>Cuenta</NavLink>
+            }
           </NavBtn>
         </Wrapper>
       </Nav>
