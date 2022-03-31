@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
@@ -15,14 +17,68 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 
 export const SignUp = () => {
-  const [role, setRole] = useState('')
+  const [userInfo, setUserInfo] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    role: ''
+  })
+  const [checkboxValue, setCheckboxValue] = useState(false)
+  const navigate = useNavigate()
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const notifySuccess = () => {
+    toast.success("¡Registrado exitosamente!", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+  }
+  const notifyError = () => {
+    toast.error("¡Hubo un error!", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+  }
+  const notifyWarning = (text) => {
+    toast.warn(text, {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
   }
 
-  const handleRoleChange = (event) => {
-    setRole(event.target.value)
+  const postData = async () => {
+    if (checkboxValue) {
+      try {
+        const { data } = await axios.get(`http://localhost:3001/users?email=${userInfo.email}`)
+        if (data.length === 0) {
+          try {
+            await axios.post('http://localhost:3001/users', userInfo)
+            await notifySuccess()
+            navigate('/')
+          } catch (error) {
+            notifyError()
+            console.log(error)
+          }
+        } else {
+          notifyWarning('El correo no está disponible')
+        }
+      } catch (error) {
+        notifyError()
+        console.log(error)
+      }
+    } else {
+      notifyWarning('Debes aceptar los términos y condiciones para registrarte')
+    }
+  }
+
+  const handleSubmit = async event => {
+    event.preventDefault()
+    postData()
+  }
+
+  const handleInputChange = event => {
+    setUserInfo({ ...userInfo, [event.target.name]: event.target.value })
+  }
+
+  const handleCheckboxChange = event => {
+    setCheckboxValue(event.target.checked)
   }
 
   return (
@@ -49,6 +105,8 @@ export const SignUp = () => {
                 fullWidth
                 id="firstName"
                 label="Nombre"
+                value={userInfo.firstName}
+                onChange={handleInputChange}
                 autoFocus
               />
             </Grid>
@@ -59,6 +117,8 @@ export const SignUp = () => {
                 id="lastName"
                 label="Apellido"
                 name="lastName"
+                value={userInfo.lastName}
+                onChange={handleInputChange}
                 autoComplete="family-name"
               />
             </Grid>
@@ -66,15 +126,16 @@ export const SignUp = () => {
               <FormControl fullWidth>
                 <InputLabel id="select-label">Tipo *</InputLabel>
                 <Select
-                  sx={{minWidth: 400}}
+                  sx={{ minWidth: 410 }}
                   labelId="select-label"
                   id="select-required"
-                  value={role}
+                  value={userInfo.role}
                   label="Tipo de usuario *"
-                  onChange={handleRoleChange}
+                  name="role"
+                  onChange={handleInputChange}
                 >
-                  <MenuItem value={'cliente'}>Cliente</MenuItem>
-                  <MenuItem value={'estilista'}>Estilista</MenuItem>
+                  <MenuItem value={'client'}>Cliente</MenuItem>
+                  <MenuItem value={'stylist'}>Estilista</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -85,6 +146,8 @@ export const SignUp = () => {
                 id="email"
                 label="Correo"
                 name="email"
+                value={userInfo.email}
+                onChange={handleInputChange}
                 autoComplete="email"
               />
             </Grid>
@@ -96,12 +159,19 @@ export const SignUp = () => {
                 label="Contraseña"
                 type="password"
                 id="password"
+                value={userInfo.password}
+                onChange={handleInputChange}
                 autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox
+                    value={checkboxValue}
+                    color="primary"
+                    onChange={handleCheckboxChange}
+                  />}
                 label="Estoy de acuerdo con los términos y condiciones"
               />
             </Grid>

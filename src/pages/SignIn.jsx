@@ -11,7 +11,9 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 
 export const SignIn = () => {
-  const [userData, setUserData] = useState({ email: "", password: "" })
+  const [userData, setUserData] = useState({
+    email: '', password: ''
+  })
   const { setUser } = useAuth()
   const navigate = useNavigate()
 

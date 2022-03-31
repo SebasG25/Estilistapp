@@ -13,16 +13,16 @@ export const Nav = styled.nav`
     padding: 0.5rem calc((100vw - 1000px) / 2);
     z-index: 10;
     transition: 0.7s all ease-in-out;
-    transform: ${({show}) => !show && 'translateY(-100%)'};
+    transform: ${({ show }) => !show && 'translateY(-100%)'};
 
     @media screen and (max-width: 768px) {
         position: absolute;
         width: 100%;
-        height: ${({navIsOpen}) => !navIsOpen ? '80px' : '100vh'};
+        height: ${({ navIsOpen }) => !navIsOpen ? '80px' : '100vh'};
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        opacity: ${({navIsOpen}) => navIsOpen && '0.85'};;
+        opacity: ${({ navIsOpen }) => navIsOpen && '0.85'};;
         transition: 0.5s all ease;
     }
 `
@@ -88,7 +88,6 @@ export const Bars = styled(FaBars)`
         position: absolute;
         top: 23px;
         right: 15px;
-        transform: translate()(-100%, 75%);
         font-size: 1.8rem;
         cursor: pointer;
         transition: all .5s ease-in-out;
@@ -128,7 +127,7 @@ export const NavMenu = styled.div`
     transition: all .2s ease-in-out;
 
     @media screen and (max-width: 768px){
-        visibility: ${({navIsOpen}) => !navIsOpen ? 'hidden' : 'visible'};
+        visibility: ${({ navIsOpen }) => !navIsOpen ? 'hidden' : 'visible'};
         flex-direction: column;
         justify-content: center;
         transition: all .1s ease-in-out;
@@ -142,7 +141,7 @@ export const NavBtn = styled.nav`
     transition: all .2s ease-in-out;
 
     @media screen and (max-width: 768px){
-        visibility: ${({navIsOpen}) => !navIsOpen ? 'hidden' : 'visible'};
+        visibility: ${({ navIsOpen }) => !navIsOpen ? 'hidden' : 'visible'};
         margin: 0;
         transition: all .1s ease-in-out;
     }

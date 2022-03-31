@@ -4,6 +4,7 @@ import { useAuth } from '../auth/useAuth'
 import { Spinner } from '../components/Spinner/Spinner'
 import axios from 'axios'
 import ProfilePlaceHolder from '../assets/ProfilePlaceHolder.png'
+import styles from '../styles/Profile.module.css'
 
 export const Profile = () => {
     const { userId } = useParams()
@@ -42,29 +43,40 @@ export const Profile = () => {
         <div>
             {
                 userData ?
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'column'
-                    }}>
+                    <div className={styles.mainContainer}>
                         <div className="imageContainer" style={{ marginTop: 120 }}>
-                            <img src={ProfilePlaceHolder} alt="" width={150} height={150} style={{ borderRadius: '20px' }} />
+                            <img
+                                src={ProfilePlaceHolder}
+                                alt='user-profile' width={150}
+                                height={150}
+                                style={{
+                                    borderRadius: '20px',
+                                    backgroundColor: 'azure'
+                                }}
+                            />
                         </div>
-                        <div className="profileName">
-                            <h3>{userData.firstName} {userData.lastName}</h3>
-                        </div>
-                        <div className="detailsContainer">
-                            Detalles del perfil
+                        <div className={styles.detailsContainer}>
+                            <h3 className={styles.profileName}>{userData?.firstName} {userData?.lastName}</h3>
+                            <p>
+                                <strong>Contacto:</strong> {userData?.email}
+                            </p>
+                            <p>
+                                <strong>Tipo:</strong> {userData?.role === 'client' ? 'Cliente' : 'Estilista'}
+                            </p>
                         </div>
                         {
                             user?.id === userId &&
                             <div>
-                                <button onClick={handleCloseSesion}>Cerrar sesión</button>
+                                <div
+                                    className={styles.closeSesionBtn}
+                                    onClick={handleCloseSesion}
+                                >
+                                    Cerrar sesión
+                                </div>
                             </div>
                         }
                     </div>
-                    : <h1 style={{ textAlign: 'center', marginTop: 150 }}>No existe un usuario con id: {userId}</h1>
+                    : <h1 style={{ textAlign: 'center', marginTop: 150 }}>No se encontró un usuario</h1>
             }
         </div>
     )

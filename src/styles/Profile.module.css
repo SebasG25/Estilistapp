@@ -1,0 +1,43 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 80vh;
+}
+
+.closeSesionBtn {
+    margin-top: 5rem;
+    border-radius: 4px;
+    background: #256ce1;
+    padding: 10px 22px;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.closeSesionBtn:hover {
+    transition: all 0.3s ease-in-out;
+    background: #5697ff;
+    color: #010606;
+}
+
+.detailsContainer {
+    font-size: 1.15rem;
+    max-width: 400px;
+    margin: 15px;
+    width: 80%;
+    height: auto;
+    margin-top: 120px;
+}
+
+.profileName {
+    margin-bottom: 30px;
+}
+
+p {
+    margin: 4px 0;
+}

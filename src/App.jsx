@@ -8,6 +8,7 @@ import { Services } from './pages/Services'
 import { Profile } from './pages/Profile'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { AuthProvider } from './auth/AuthProvider'
+import { ToastContainer } from 'react-toastify'
 
 export const App = () => {
   return (
@@ -24,6 +25,7 @@ export const App = () => {
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </AuthProvider>
   )
 }
