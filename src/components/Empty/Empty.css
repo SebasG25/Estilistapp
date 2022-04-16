@@ -1,0 +1,7 @@
+.empty__title {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 45px;
+  margin-top: 150px
+}

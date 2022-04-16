@@ -7,6 +7,7 @@ import { About } from './pages/About'
 import { Services } from './pages/Services'
 import { Profile } from './pages/Profile'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { FindStylist } from './pages/FindStylist'
 import { AuthProvider } from './auth/AuthProvider'
 import { ToastContainer } from 'react-toastify'
 
@@ -22,6 +23,7 @@ export const App = () => {
           <Route path='/services' element={<Services />} />
           <Route path='/about' element={<About />} />
           <Route path='/profile/:userId' element={<Profile />} />
+          <Route path='/find-stylist' element={<FindStylist />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
