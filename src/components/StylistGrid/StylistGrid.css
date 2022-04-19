@@ -1,8 +1,8 @@
 .stylistGrid__container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 230px);
-    gap: 40px;
-    padding: 40px;
+    gap: 20px;
+    padding: 25px;
     justify-content: center;
 }
 
