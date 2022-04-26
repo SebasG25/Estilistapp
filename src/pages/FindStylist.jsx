@@ -1,23 +1,13 @@
+import { useState } from 'react'
 import { StylistGrid } from '../components/StylistGrid/StylistGrid'
-import { useSearchParams } from 'react-router-dom'
+import { categoryOptions, serviceOptions } from '../utils/SelectOptions'
 import Select from 'react-select'
 import styles from '../styles/FindStylist.module.css'
 
 export const FindStylist = () => {
-    const [query] = useSearchParams()
-    const filter = query.get('filter') //TO DO
-
-    const categoryOptions = [
-        { value: 'chocolate', label: 'Categoria' },
-        { value: 'strawberry', label: 'Categoria' },
-        { value: 'vanilla', label: 'Categoria' }
-    ]
-
-    const serviceOptions = [
-        { value: 'chocolate', label: 'Servicio' },
-        { value: 'strawberry', label: 'Servicio' },
-        { value: 'vanilla', label: 'Servicio' }
-    ]
+    const [categories, setCategories] = useState([])
+    const [services, setServices] = useState([])
+    const [querySearch] = useState('')
 
     return (
         <div style={{ marginTop: 120 }}>
@@ -29,6 +19,7 @@ export const FindStylist = () => {
                         options={categoryOptions}
                         placeholder='Categorias'
                         noOptionsMessage={() => 'No hay mas categorías'}
+                        onChange={setCategories}
                     />
                 </div>
 
@@ -39,10 +30,11 @@ export const FindStylist = () => {
                         options={serviceOptions}
                         placeholder='Servicios'
                         noOptionsMessage={() => 'No hay mas servicios'}
+                        onChange={setServices}
                     />
                 </div>
             </div>
-            <StylistGrid filter={filter} />
+            <StylistGrid categories={categories} services={services} querySearch={querySearch} />
         </div>
     )
 }

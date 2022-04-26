@@ -5,7 +5,7 @@ import { Spinner } from '../Spinner/Spinner'
 import axios from 'axios'
 import './StylistGrid.css'
 
-export function StylistGrid({ filter }) {
+export function StylistGrid({ categories, services, querySearch}) {
     const [stylists, setStylists] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -13,15 +13,16 @@ export function StylistGrid({ filter }) {
         const fetchData = async () => {
             setIsLoading(true)
             try {
-                const { data } = await axios.get(`http://localhost:3001/users?role=stylist`)
-                data.length !== 0 && setStylists([ ...data])
+                const { data } = await axios.get(`http://localhost:3001/users?role=stylist&q=${querySearch}`)
+                console.log(data)
+                data.length !== 0 ? setStylists([ ...data]) : setStylists([])
             } catch (error) {
                 console.log(error)
             }
             setIsLoading(false)
         }
         fetchData()
-    }, [filter])
+    }, [categories, services])
 
     if (!isLoading && stylists.length === 0) {
         return <Empty />;

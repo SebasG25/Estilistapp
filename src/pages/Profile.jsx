@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth'
 import { Spinner } from '../components/Spinner/Spinner'
+import { categoryOptions, serviceOptions } from '../utils/SelectOptions'
 import axios from 'axios'
 import ProfilePlaceHolder from '../assets/ProfilePlaceHolder.png'
 import styles from '../styles/Profile.module.css'
@@ -14,18 +15,6 @@ export const Profile = () => {
     const [isEditing, setIsEditing] = useState(false)
     const { user, setUser } = useAuth()
     const navigate = useNavigate()
-
-    const categoryOptions = [
-        { value: 'chocolate', label: 'Categoria' },
-        { value: 'strawberry', label: 'Categoria' },
-        { value: 'vanilla', label: 'Categoria' }
-    ]
-
-    const serviceOptions = [
-        { value: 'chocolate', label: 'Servicio' },
-        { value: 'strawberry', label: 'Servicio' },
-        { value: 'vanilla', label: 'Servicio' }
-    ]
 
     useEffect(() => {
         const fetchData = async () => {
@@ -105,21 +94,30 @@ export const Profile = () => {
                                 }
                             </div>
                             {
-                                user?.id === userId &&
-                                <div>
-                                    <div
-                                        className={styles.editButton}
-                                        onClick={handleEditButton}
-                                    >
-                                        Editar perfil
+                                user?.id === userId ?
+                                    <div>
+                                        <div
+                                            className={styles.editButton}
+                                            onClick={handleEditButton}
+                                        >
+                                            Editar perfil
+                                        </div>
+                                        <div
+                                            className={styles.closeSesionBtn}
+                                            onClick={handleCloseSesion}
+                                        >
+                                            Cerrar sesión
+                                        </div>
                                     </div>
-                                    <div
-                                        className={styles.closeSesionBtn}
-                                        onClick={handleCloseSesion}
-                                    >
-                                        Cerrar sesión
+                                    : userData?.role === 'stylist' &&
+                                    <div>
+                                        <div
+                                            className={styles.closeSesionBtn}
+                                            onClick={() => navigate('schedule')}
+                                        >
+                                            Reservar con el estilista
+                                        </div>
                                     </div>
-                                </div>
                             }
                         </div>
                         : <div className={styles.mainContainer}> {/*Editing*/}
@@ -144,7 +142,7 @@ export const Profile = () => {
                                     <strong>Tipo:</strong> {userData?.role === 'client' ? 'Cliente' : 'Estilista'}
                                 </p>
                                 {
-                                    userData?.role === 'stylist' &&
+                                    user?.role === 'stylist' &&
                                     <div>
                                         <div style={{ width: 250, marginBottom: 15 }}>
                                             <Select
