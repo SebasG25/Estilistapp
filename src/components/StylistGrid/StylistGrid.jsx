@@ -9,12 +9,12 @@ export function StylistGrid({ categories, services, querySearch}) {
     const [stylists, setStylists] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
+    //TODO: Filtrar estilistas por categorias y servicios
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
             try {
                 const { data } = await axios.get(`http://localhost:3001/users?role=stylist&q=${querySearch}`)
-                console.log(data)
                 data.length !== 0 ? setStylists([ ...data]) : setStylists([])
             } catch (error) {
                 console.log(error)
@@ -22,7 +22,7 @@ export function StylistGrid({ categories, services, querySearch}) {
             setIsLoading(false)
         }
         fetchData()
-    }, [categories, services])
+    }, [categories, querySearch, services])
 
     if (!isLoading && stylists.length === 0) {
         return <Empty />;

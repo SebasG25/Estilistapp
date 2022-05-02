@@ -10,7 +10,7 @@ export const LandingPage = () => {
 
   return (
     <div>
-      <Hero imageSrc={image_01} title={user ? `¡Hola ${user.firstName}!` : 'Estilistapp'}/>
+      <Hero imageSrc={image_01} title={user ? `¡Hola ${user.firstName}!` : 'Estilistapp'} />
       <Slider imageSrc={image_02} title={'Basic text'} subtitle={'Basic subtitle'} />
       <Slider imageSrc={image_03} title={'Basic text'} subtitle={'Basic subtitle'} flipped={true} />
     </div>

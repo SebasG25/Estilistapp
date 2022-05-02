@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spinner } from '../components/Spinner/Spinner'
 import { getWindowDimensions } from '../utils/getWindowDimensions'
@@ -6,6 +6,7 @@ import { serviceOptions } from '../utils/SelectOptions'
 import Select from 'react-select'
 import styles from '../styles/StylistSchedule.module.css'
 import axios from 'axios'
+import { useReactToPrint } from 'react-to-print';
 
 export const StylistSchedule = () => {
   const { userId } = useParams()
@@ -14,6 +15,10 @@ export const StylistSchedule = () => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions())
   const [isLoading, setIsLoading] = useState(true)
   const [booking, setBooking] = useState(null)
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  })
 
   useEffect(() => {
     const fetchSchedulesData = async () => {
@@ -90,29 +95,39 @@ export const StylistSchedule = () => {
         }
       </div>
       {windowDimensions.width > 700 ? <hr style={{ height: '100vh' }} /> : <hr style={{ width: '100vw', marginTop: 35 }} />}
+      {/* Facturación */}
       <div className={styles.invoidContainer}>
-        <h1 style={{ margin: (windowDimensions.width > 700) ? 120 : 40 }}>Facturación</h1>
-        {
-          booking?.hasOwnProperty('schedule') &&
-          <div>
-            <p><b>Estilista:</b> {userData?.firstName} {userData?.lastName}</p>
-            <p><b>Horario:</b> {booking.schedule}</p>
-            {
-              booking?.hasOwnProperty('service') &&
-              <div>
-                <p><b>Servicio: </b>{booking.service}</p>
-                <p><b>Total a pagar: </b>$$</p>
-                <div
-                  className={styles.payButton}
-                  style={{ marginTop: 20 }}
-                  onClick={() => console.log('Pago')}
-                >
-                  Proceder al pago
+        <div className={styles.invoidContainer} ref={componentRef}>
+          <h1 style={{ margin: (windowDimensions.width > 700) ? 120 : 40 }}>Facturación</h1>
+          {
+            booking?.hasOwnProperty('schedule') &&
+            <div>
+              <p><b>Estilista:</b> {userData?.firstName} {userData?.lastName}</p>
+              <p><b>Horario:</b> {booking.schedule}</p>
+              {
+                booking?.hasOwnProperty('service') &&
+                <div>
+                  <p><b>Servicio: </b>{booking.service}</p>
+                  <p><b>Total a pagar: </b>$$</p>
                 </div>
-              </div>
-            }
-          </div>
-        }
+              }
+            </div>
+          }
+        </div>
+        <div
+          className={styles.payButton}
+          style={{ marginTop: 20 }}
+          onClick={() => console.log('Servicio Pagado')}
+        >
+          Proceder al pago
+        </div>
+        <div
+          className={styles.printButton}
+          style={{ marginTop: 20 }}
+          onClick={handlePrint}
+        >
+          Imprimir comprobante
+        </div>
       </div>
     </div>
   )

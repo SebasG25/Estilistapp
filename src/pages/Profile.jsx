@@ -134,9 +134,9 @@ export const Profile = () => {
                                 />
                             </div>
                             <div className={styles.detailsContainer}>
-                                <h3 className={styles.profileName}>{userData?.firstName} {userData?.lastName}</h3>
+                                <input type="text" placeholder={`${userData?.firstName} ${userData?.lastName}`}/>
                                 <p>
-                                    <strong>Contacto:</strong> {userData?.email}
+                                    <strong>Contacto:</strong> <input type="text" placeholder={userData?.email} />
                                 </p>
                                 <p>
                                     <strong>Tipo:</strong> {userData?.role === 'client' ? 'Cliente' : 'Estilista'}

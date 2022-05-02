@@ -36,7 +36,7 @@
     gap: 16px;
 }
 
-.scheduleTime, .payButton {
+.scheduleTime, .payButton, .printButton {
     vertical-align: middle;
     text-align: center;
     border-radius: 4px;
