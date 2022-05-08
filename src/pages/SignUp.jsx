@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { notifySuccess, notifyError, notifyWarning } from '../utils/ToastOptions'
 import axios from 'axios'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -26,22 +26,6 @@ export const SignUp = () => {
   })
   const [checkboxValue, setCheckboxValue] = useState(false)
   const navigate = useNavigate()
-
-  const notifySuccess = () => {
-    toast.success("¡Registrado exitosamente!", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-  }
-  const notifyError = () => {
-    toast.error("¡Hubo un error!", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-  }
-  const notifyWarning = (text) => {
-    toast.warn(text, {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-  }
 
   const postData = async () => {
     if (checkboxValue) {

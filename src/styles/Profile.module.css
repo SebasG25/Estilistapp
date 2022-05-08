@@ -25,7 +25,7 @@
     text-decoration: none;
 }
 
-.closeSesionBtn:hover,.confirmEdit:hover {
+.closeSesionBtn:hover, .confirmEdit:hover {
     transition: all 0.3s ease-in-out;
     background: #5697ff;
     color: #010606;
@@ -80,6 +80,20 @@
 
 .profileName {
     margin-bottom: 30px;
+}
+
+.form__input {
+    color: #010606;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 80%;
+    display: block;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
 }
 
 p {

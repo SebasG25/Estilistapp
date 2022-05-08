@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth'
 import { Spinner } from '../components/Spinner/Spinner'
-import { categoryOptions, serviceOptions } from '../utils/SelectOptions'
+import { serviceOptions } from '../utils/SelectOptions'
+import { notifyCancelEdit, notifySuccessEdit, notifyError } from '../utils/ToastOptions'
 import axios from 'axios'
 import ProfilePlaceHolder from '../assets/ProfilePlaceHolder.png'
 import styles from '../styles/Profile.module.css'
@@ -13,6 +14,7 @@ export const Profile = () => {
     const [userData, setUserData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
+    const [userEdited, setUserEdited] = useState()
     const { user, setUser } = useAuth()
     const navigate = useNavigate()
 
@@ -23,7 +25,11 @@ export const Profile = () => {
             if (!user || user.id !== userId) {
                 try {
                     const { data } = await axios.get(`http://localhost:3001/users?id=${userId}`)
-                    data.length === 0 ? setUserData(null) : setUserData(data[0])
+                    if (data.length === 0) setUserData(null)
+                    else {
+                        setUserData(data[0])
+                        setUserEdited(data[0])
+                    }
                 } catch (error) {
                     console.log(error)
                 }
@@ -44,13 +50,24 @@ export const Profile = () => {
         setIsEditing(true)
     }
 
-    const handleEdit = e => {
+    const handleEdit = async e => {
+        //TODO: Crear put request con la api
         if (e.target.id === 'confirmButton') {
-            console.log('Cambios confirmados')
+            try {
+                await axios.put(`http://localhost:3001/users/${userId}`, userEdited)
+                notifySuccessEdit()
+            } catch (error) {
+                notifyError()
+                console.log(error)
+            }
         } else {
-            console.log('Cambios cancelados')
+            notifyCancelEdit()
         }
         setIsEditing(false)
+    }
+
+    const handleChanges = e => {
+        setUserEdited({ ...userEdited, [e.target.name]: e.target.value })
     }
 
     if (isLoading) return <Spinner />;
@@ -84,9 +101,6 @@ export const Profile = () => {
                                 {
                                     userData?.role === 'stylist' &&
                                     <div>
-                                        <p>
-                                            <strong>Categorias:</strong>
-                                        </p>
                                         <p>
                                             <strong>Servicios:</strong>
                                         </p>
@@ -134,9 +148,23 @@ export const Profile = () => {
                                 />
                             </div>
                             <div className={styles.detailsContainer}>
-                                <input type="text" placeholder={`${userData?.firstName} ${userData?.lastName}`}/>
+                                {/* TODO: Estilizar los input mostrados cuando se esté editando */}
+                                <input
+                                    className={styles.form__input}
+                                    type="text" name='firstName'
+                                    placeholder={`${userData?.firstName}`}
+                                    value={userEdited?.firstName}
+                                    onChange={handleChanges}
+                                />
+                                <input
+                                    className={styles.form__input}
+                                    type="text" name='lastName'
+                                    placeholder={`${userData?.lastName}`}
+                                    value={userEdited?.lastName}
+                                    onChange={handleChanges}
+                                />
                                 <p>
-                                    <strong>Contacto:</strong> <input type="text" placeholder={userData?.email} />
+                                    <strong>Contacto:</strong> <input className={styles.form__input} type="text" name='email' placeholder={userData?.email} value={userEdited?.email} onChange={handleChanges} />
                                 </p>
                                 <p>
                                     <strong>Tipo:</strong> {userData?.role === 'client' ? 'Cliente' : 'Estilista'}
@@ -144,16 +172,6 @@ export const Profile = () => {
                                 {
                                     user?.role === 'stylist' &&
                                     <div>
-                                        <div style={{ width: 250, marginBottom: 15 }}>
-                                            <Select
-                                                isMulti
-                                                closeMenuOnSelect={false}
-                                                options={categoryOptions}
-                                                placeholder='Categorias'
-                                                noOptionsMessage={() => 'No hay mas categorías'}
-                                            />
-                                        </div>
-
                                         <div style={{ width: 250 }}>
                                             <Select
                                                 isMulti
