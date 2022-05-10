@@ -1,3 +1,9 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .mainContainer {
     display: flex;
     justify-content: center;
@@ -6,7 +12,7 @@
     height: 80vh;
 }
 
-.closeSesionBtn {
+.closeSesionBtn, .confirmEdit {
     margin-top: 5rem;
     border-radius: 4px;
     background: #256ce1;
@@ -19,9 +25,47 @@
     text-decoration: none;
 }
 
-.closeSesionBtn:hover {
+.closeSesionBtn:hover, .confirmEdit:hover {
     transition: all 0.3s ease-in-out;
     background: #5697ff;
+    color: #010606;
+}
+
+.editButton {
+    margin-top: 5rem;
+    border-radius: 4px;
+    background: #E89C05;
+    padding: 10px 22px;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.editButton:hover {
+    transition: all 0.3s ease-in-out;
+    background: #F0BA0A;
+    color: #010606;
+}
+
+.cancelEdit {
+    margin-top: 5rem;
+    border-radius: 4px;
+    background: #c91218;
+    padding: 10px 22px;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.cancelEdit:hover {
+    transition: all 0.3s ease-in-out;
+    background: #f0050c;
     color: #010606;
 }
 
@@ -36,6 +80,20 @@
 
 .profileName {
     margin-bottom: 30px;
+}
+
+.form__input {
+    color: #010606;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 80%;
+    display: block;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
 }
 
 p {
