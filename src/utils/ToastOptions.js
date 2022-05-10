@@ -12,6 +12,12 @@ export const notifyError = () => {
     })
 }
 
+export const notifySignInError = () => {
+    toast.error("¡Correo o contraseña incorrecta!", {
+        position: toast.POSITION.BOTTOM_CENTER
+    })
+}
+
 export const notifyWarning = (text) => {
     toast.warn(text, {
         position: toast.POSITION.BOTTOM_CENTER

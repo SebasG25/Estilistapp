@@ -31,7 +31,7 @@ export const Profile = () => {
                         setUserEdited(data[0])
                     }
                 } catch (error) {
-                    console.log(error)
+                    notifyError()
                 }
             }
             setIsLoading(false)
@@ -101,7 +101,7 @@ export const Profile = () => {
                                     userData?.role === 'stylist' &&
                                     <div>
                                         <p>
-                                            <strong>Servicios:</strong>
+                                            <strong>Servicios:</strong> {new Intl.ListFormat('es').format(userData?.services)}
                                         </p>
                                     </div>
                                 }
@@ -168,8 +168,14 @@ export const Profile = () => {
                                     <strong>Tipo:</strong> {userData?.role === 'client' ? 'Cliente' : 'Estilista'}
                                 </p>
                                 {
-                                    user?.role === 'stylist' &&
+                                    userData?.role === 'stylist' &&
                                     <div>
+                                        <p>
+                                            <strong>Servicios:</strong> {new Intl.ListFormat('es').format(userData?.services)}
+                                        </p>
+                                    </div>
+                                }
+                                {/* <div>
                                         <div style={{ width: 250 }}>
                                             <Select
                                                 isMulti
@@ -179,8 +185,7 @@ export const Profile = () => {
                                                 noOptionsMessage={() => 'No hay mas servicios'}
                                             />
                                         </div>
-                                    </div>
-                                }
+                                    </div> */}
                             </div>
                             {
                                 <div>

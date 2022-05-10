@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../auth/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
+import { notifySignInError, notifyError } from '../utils/ToastOptions'
 import axios from 'axios'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -27,9 +28,9 @@ export const SignIn = () => {
         setUser(userLogged)
         return navigate(`/profile/${userLogged.id}`)
       }
-      console.log('email o contraseña incorrecta')
+      notifySignInError()
     } catch (error) {
-      console.log(error)
+      notifyError()
     }
   }
 

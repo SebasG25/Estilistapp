@@ -10,7 +10,6 @@ export function StylistGrid({ filteredService, querySearch }) {
     const [isLoading, setIsLoading] = useState(true)
     const [filteredStylists, setFilteredStylists] = useState([])
 
-    //TODO: Filtrar estilistas por servicios
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
