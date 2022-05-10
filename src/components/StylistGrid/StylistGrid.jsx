@@ -5,24 +5,39 @@ import { Spinner } from '../Spinner/Spinner'
 import axios from 'axios'
 import './StylistGrid.css'
 
-export function StylistGrid({ categories, services, querySearch}) {
+export function StylistGrid({ filteredService, querySearch }) {
     const [stylists, setStylists] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [filteredStylists, setFilteredStylists] = useState([])
 
-    //TODO: Filtrar estilistas por categorias y servicios
+    //TODO: Filtrar estilistas por servicios
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
-            try {
-                const { data } = await axios.get(`http://localhost:3001/users?role=stylist&q=${querySearch}`)
-                data.length !== 0 ? setStylists([ ...data]) : setStylists([])
-            } catch (error) {
-                console.log(error)
+            if (filteredService.length === 0) {
+
+                try {
+                    const { data } = await axios.get(`http://localhost:3001/users?role=stylist&q=${querySearch}`)
+                    if (data.length !== 0) {
+                        setStylists([...data])
+                        setFilteredStylists([...data])
+                    } else {
+                        setStylists([])
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+
+            } else {
+                const filterStylists = stylists.filter(stylist => {
+                    return stylist.services.includes(filteredService.value)
+                })
+                setFilteredStylists(filterStylists)
             }
             setIsLoading(false)
         }
         fetchData()
-    }, [categories, querySearch, services])
+    }, [querySearch, filteredService])
 
     if (!isLoading && stylists.length === 0) {
         return <Empty />;
@@ -32,7 +47,7 @@ export function StylistGrid({ categories, services, querySearch}) {
 
     return (
         <ul className='stylistGrid__container'>
-            {stylists.map(stylist => (
+            {filteredStylists.map(stylist => (
                 <StylistCard key={stylist.id} stylist={stylist} />
             ))}
         </ul>

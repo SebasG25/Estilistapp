@@ -51,7 +51,6 @@ export const Profile = () => {
     }
 
     const handleEdit = async e => {
-        //TODO: Crear put request con la api
         if (e.target.id === 'confirmButton') {
             try {
                 await axios.put(`http://localhost:3001/users/${userId}`, userEdited)
@@ -148,7 +147,6 @@ export const Profile = () => {
                                 />
                             </div>
                             <div className={styles.detailsContainer}>
-                                {/* TODO: Estilizar los input mostrados cuando se esté editando */}
                                 <input
                                     className={styles.form__input}
                                     type="text" name='firstName'
