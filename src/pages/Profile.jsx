@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth'
 import { Spinner } from '../components/Spinner/Spinner'
-import { serviceOptions } from '../utils/SelectOptions'
 import { notifyCancelEdit, notifySuccessEdit, notifyError } from '../utils/ToastOptions'
 import axios from 'axios'
 import ProfilePlaceHolder from '../assets/ProfilePlaceHolder.png'
 import styles from '../styles/Profile.module.css'
-import Select from 'react-select'
 
 export const Profile = () => {
     const { userId } = useParams()
@@ -83,10 +81,6 @@ export const Profile = () => {
                                     alt='user-profile'
                                     width={150}
                                     height={150}
-                                    style={{
-                                        borderRadius: '20px',
-                                        backgroundColor: 'azure'
-                                    }}
                                 />
                             </div>
                             <div className={styles.detailsContainer}>
