@@ -43,6 +43,12 @@ export const Navbar = () => {
             <NavLink to='/services' onClick={() => setNavIsOpen(!navIsOpen)}>
               Servicios
             </NavLink>
+            {
+              userData &&
+              <NavLink to='/find-stylist' onClick={() => setNavIsOpen(!navIsOpen)}>
+                Reservar estilista
+              </NavLink>
+            }
           </NavMenu>
           <NavBtn navIsOpen={navIsOpen} onClick={() => setNavIsOpen(!navIsOpen)}>
             {
