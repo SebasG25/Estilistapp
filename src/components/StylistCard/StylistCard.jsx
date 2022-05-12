@@ -8,14 +8,16 @@ export const StylistCard = ({ stylist }) => {
     return (
         <li className='stylistCard__card'>
             <Link to={`/profile/${id}`}>
-                <img
-                    className='stylistCard__image'
-                    src={ProfilePlaceHolder}
-                    alt='user-profile'
-                    width={230}
-                    height={345}
-                />
-                <div>{`${firstName} ${lastName}`}</div>
+                <div className="stylistCard__picture">
+                    <img
+                        className='stylistCard__image'
+                        src={ProfilePlaceHolder}
+                        alt='user-profile'
+                        width={230}
+                        height={300}
+                    />
+                </div>
+                <div className='stylistCard__name'>{`${firstName} ${lastName}`}</div>
             </Link>
         </li>
     )
